@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subliminal</title>
+    <style>
+      html {
+        height: 100%;
+        cursor: crosshair;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        min-height: 100%;
+        margin: 0;
+      }
+
+      #sillaba {
+        font-family: courier, monospace;
+        font-size: min(50vw, 100vh);
+        transform: translateY(-100%);
+        line-height: 0.1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="sillaba"></div>
+    <script>
+      const sillaba = document.getElementById('sillaba');
+      const sillabe = ['ba', 'bo', 'bi', 'bu', 'be', 'ca', 'co', 'ci', 'cu', 'ce', 'da', 'do', 'di', 'du', 'de', 'ta', 'to', 'ti', 'tu', 'te', 'fa', 'fo', 'fi', 'fu', 'fe', 'ga', 'go', 'gi', 'gu', 'ge', 'pa', 'po', 'pi', 'pu', 'pe', 'ra', 'ro', 'ri', 'ru', 're', 'la', 'lo', 'li', 'lu', 'le', 'za', 'zo', 'zi', 'zu', 'ze', 'bar', 'bir', 'bur'];
+      const frasi = [
+        ['ge', 'la', 'to', 'al', 'la', 'man', 'dor', 'la'],
+        ['ma', 'ri', 'ua', 'na'],
+      ];
+      let delta = 50;
+      let duty = 33;
+      let then = 0;
+      let idx = 0;
+      let subliminal = false;
+      let probability = 0.02;
+      let step = false;
+      let rafID;
+
+      const raf = (now) => {
+        const elapsed = now - then;
+
+        if (elapsed > delta) {
+          // sillaba.style.color = subliminal ? 'red' : 'black';
+          sillaba.innerHTML = (subliminal ? frasi[subliminal - 1][idx] : sillabe[idx]) || '';
+          step = true;
+          then = now;
+        } else if (elapsed > duty) {
+          sillaba.innerHTML = '';
+        }
+
+        if (step) {
+          step = false;
+          subliminal = subliminal && idx < frasi[subliminal - 1].length - 1 && subliminal;
+
+          if (subliminal) {
+            idx++;
+          } else {
+            const rand = Math.random();
+            subliminal = rand < probability ? Math.ceil(Math.random() * frasi.length) : false;
+            idx = subliminal ? 0 : Math.floor(rand * sillabe.length);
+          }
+        }
+
+        rafID = requestAnimationFrame(raf);
+      };
+
+      raf();
+
+      // document.addEventListener('mousemove', (e) => {
+      //   delta = e.x * 2;
+      //   duty = delta * (e.y / document.documentElement.clientHeight);
+      // });
+    </script>
+  </body>
+</html>
