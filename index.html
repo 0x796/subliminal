@@ -43,6 +43,7 @@
       let idx = 0;
       let subliminal = false;
       let probability = 0.02;
+      let slow = false;
       let step = false;
       let rafID;
 
@@ -80,6 +81,22 @@
       //   delta = e.x * 2;
       //   duty = delta * (e.y / document.documentElement.clientHeight);
       // });
+      
+      document.addEventListener('click', () => {
+        slow = !slow;
+        if (slow) {
+          document.documentElement.style.background = 'black';
+          document.documentElement.style.color = 'white';
+          duty = delta = 100;
+          probability = 0.1;
+        } else {
+          document.documentElement.style.background = 'white';
+          document.documentElement.style.color = 'black';
+          delta = 50;
+          duty = 33;
+          probability = 0.02;
+        }
+      });
     </script>
   </body>
 </html>
