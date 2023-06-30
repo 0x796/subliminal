@@ -134,7 +134,11 @@
             cycle = Math.ceil(500 * touches[1].v);
             duty = Math.ceil(cycle * touches[0].v);
           } else {
-            cycle = Math.ceil(500 * touches[0].v);
+            if (touches[0].u < 0.5) {
+              duty = Math.ceil(cycle * touches[0].v);
+            } else {
+              cycle = Math.ceil(500 * touches[0].v);
+            }
           }
         }, { passive: false });
       }
