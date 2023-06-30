@@ -60,7 +60,7 @@
 
         if (step) {
           step = false;
-          subliminal = subliminal && idx < parole[subliminal - 1].length - 1 && subliminal;
+          subliminal = subliminal && (idx + 1) < parole[subliminal - 1].length && subliminal;
 
           if (subliminal) {
             idx++;
@@ -75,38 +75,35 @@
       };
 
       raf();
+      
 
-      // document.addEventListener('mousemove', (e) => {
-      //   cycle = e.x * 2;
-      //   duty = cycle * (e.y / document.documentElement.clientHeight);
-      // });
       
       let slow = false;
-      document.addEventListener('click', () => {
-        if (dragging) {
-          dragging = false;
-          return;
-        }
+      const invert = () => {
         slow = !slow;
         if (slow) {
           document.documentElement.style.background = 'black';
           document.documentElement.style.color = 'white';
-          duty = cycle = 100;
           probability = 0.1;
         } else {
           document.documentElement.style.background = 'white';
           document.documentElement.style.color = 'black';
-          cycle = 50;
-          duty = 33;
           probability = 0.02;
         }
-      });
+      };
 
       let mousedown = false;
       let dragging = false;
       if (window.matchMedia("(hover: hover)").matches) {
         document.addEventListener('mousedown', () => { mousedown = true; });
-        document.addEventListener('mouseup', () => { mousedown = false; });
+        document.addEventListener('mouseup', () => {
+          mousedown = false;
+          if (dragging) {
+            dragging = false;
+          } else {        
+            invert();
+          }
+        });
         document.addEventListener('mousemove', (e) => {
           if (mousedown) {
             e.preventDefault();
@@ -114,11 +111,18 @@
             dragging = true;
             const u = e.clientX / document.documentElement.clientWidth;
             const v = e.clientY / document.documentElement.clientHeight;
-            cycle = Math.ceil(500 * v);
-            duty = Math.ceil(cycle * u);
+            cycle = Math.ceil(500 * (1 - u));
+            duty = Math.ceil(cycle * (1 - v));
           }
         });
       } else {
+        document.addEventListener('touchend', () => {
+          if (dragging) {
+            dragging = false;
+          } else {        
+            invert();
+          }
+        });
         document.addEventListener('touchmove', (e) => {
           e.preventDefault();
           e.stopImmediatePropagation();
