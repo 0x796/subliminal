@@ -66,8 +66,8 @@
             idx++;
           } else {
             const rand = Math.random();
-            subliminal = rand < probability ? Math.ceil(Math.random() * parole.length) : false;
-            idx = subliminal ? 0 : Math.floor(rand * sillabe.length);
+            subliminal = rand < probability ? Math.ceil((rand / probability) * parole.length) : false;
+            idx = subliminal ? 0 : Math.floor(((rand - probability) / (1 - probability)) * sillabe.length);
           }
         }
 
