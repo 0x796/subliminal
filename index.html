@@ -26,10 +26,31 @@
         transform: translateY(-15%);
         line-height: 1.2;
       }
+
+      #info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        font-family: Helvetica, sans-serif;
+        font-size: 12px;
+        color: grey;
+        pointer-events: none;
+      }
+
+      #info > * {
+        margin: 10px;
+      }
     </style>
   </head>
   <body>
     <div id="sillaba"></div>
+    <div id="info">
+      <span id="duty"></span>
+      <span id="cycle"></span>
+    </div>
     <script>
       const sillaba = document.getElementById('sillaba');
       const sillabe = ['ba', 'bo', 'bi', 'bu', 'be', 'ca', 'co', 'ci', 'cu', 'ce', 'da', 'do', 'di', 'du', 'de', 'ta', 'to', 'ti', 'tu', 'te', 'fa', 'fo', 'fi', 'fu', 'fe', 'ga', 'go', 'gi', 'gu', 'ge', 'pa', 'po', 'pi', 'pu', 'pe', 'ra', 'ro', 'ri', 'ru', 're', 'la', 'lo', 'li', 'lu', 'le', 'za', 'zo', 'zi', 'zu', 'ze', 'bar', 'bir', 'bur'];
@@ -75,7 +96,14 @@
       };
 
       rafID = requestAnimationFrame(raf);
-      
+
+      const dutyText = document.getElementById('duty');
+      const cycleText = document.getElementById('cycle');
+      const updateInfo = () => {
+        dutyText.innerHTML = Math.min(parseFloat((100*duty/cycle).toFixed(1)), 100) + ' % (' + duty + 'ms)';
+        cycleText.innerHTML = parseFloat((60*1000/cycle).toFixed(1)) + ' BPM [' + parseFloat((1000/cycle).toFixed(1)) + ' BPS]';
+      };
+      updateInfo();
 
       
       let slow = false;
@@ -113,6 +141,7 @@
             const v = e.clientY / document.documentElement.clientHeight;
             cycle = Math.ceil(500 * (1 - u));
             duty = Math.ceil(cycle * (1 - v));
+            updateInfo();
           }
         });
       } else {
@@ -144,6 +173,7 @@
               cycle = Math.ceil(500 * touches[0].v);
             }
           }
+          updateInfo();
         }, { passive: false });
       }
     </script>
