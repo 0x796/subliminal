@@ -12,6 +12,7 @@
       }
 
       body {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -21,10 +22,12 @@
       }
 
       #sillaba {
+        position: absolute;
+        top: 0;
         font-family: courier, monospace;
         font-size: min(50vw, 100vh);
-        transform: translateY(-15%);
         line-height: 1.2;
+        transform: translateY(-10%);
       }
 
       #info {
