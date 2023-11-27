@@ -17,8 +17,15 @@
         justify-content: center;
         align-items: center;
         flex-direction: row;
+        background: white;
+        color: black;
         min-height: 100%;
         margin: 0;
+      }
+
+      body.invert {
+        background: black;
+        color: white;
       }
 
       #sillaba {
@@ -47,7 +54,7 @@
       }
     </style>
   </head>
-  <body>
+  <body class="invert">
     <div id="sillaba"></div>
     <div id="info">
       <span id="duty"></span>
@@ -60,12 +67,12 @@
         ['ge', 'la', 'to', 'al', 'la', 'man', 'dor', 'la'],
         ['ma', 'ri', 'ua', 'na'],
       ];
-      let cycle = 50;
-      let duty = 33;
+      let cycle = 125;
+      let duty = 36;
       let rafThen = 0;
       let idx = 0;
       let subliminal = false;
-      let probability = 0.02;
+      let probability = 0.1;
       let step = false;
       let rafID;
 
@@ -73,7 +80,7 @@
         const elapsed = rafNow - rafThen;
 
         if (elapsed > cycle) {
-          // sillaba.style.color = subliminal ? 'red' : 'black';
+          // sillaba.style.color = subliminal ? 'red' : '';
           sillaba.innerHTML = (subliminal ? parole[subliminal - 1][idx] : sillabe[idx]) || '';
           step = true;
           rafThen = rafNow;
@@ -108,16 +115,14 @@
       updateInfo();
 
       
-      let slow = false;
+      let inverted = true;
       const invert = () => {
-        slow = !slow;
-        if (slow) {
-          document.documentElement.style.background = 'black';
-          document.documentElement.style.color = 'white';
+        inverted = !inverted;
+        if (inverted) {
+          document.body.classList.add('invert');
           probability = 0.1;
         } else {
-          document.documentElement.style.background = 'white';
-          document.documentElement.style.color = 'black';
+          document.body.classList.remove('invert');
           probability = 0.02;
         }
       };
