@@ -81,10 +81,12 @@
 
         if (elapsed > cycle) {
           // sillaba.style.color = subliminal ? 'red' : '';
+          document.body.style.background = '';
           sillaba.innerHTML = (subliminal ? parole[subliminal - 1][idx] : sillabe[idx]) || '';
           step = true;
           rafThen = rafNow;
         } else if (elapsed > duty) {
+          document.body.style.background = blink ? (inverted ? 'white' : 'black') : '';
           sillaba.innerHTML = '';
         }
 
@@ -116,9 +118,11 @@
 
       
       let inverted = true;
+      let blink = false;
       const invert = () => {
         inverted = !inverted;
         if (inverted) {
+          blink = !blink;
           document.body.classList.add('invert');
           probability = 0.02;
         } else {
