@@ -72,7 +72,7 @@
       let rafThen = 0;
       let idx = 0;
       let subliminal = false;
-      let probability = 0.1;
+      let probability = 0.02;
       let step = false;
       let rafID;
 
@@ -120,10 +120,10 @@
         inverted = !inverted;
         if (inverted) {
           document.body.classList.add('invert');
-          probability = 0.1;
+          probability = 0.02;
         } else {
           document.body.classList.remove('invert');
-          probability = 0.02;
+          probability = 0.1;
         }
       };
 
