@@ -103,12 +103,12 @@
         if (elapsed > cycle) {
           // sillaba.style.color = subliminal ? 'red' : '';
           document.body.style.background = '';
-          sillaba.innerHTML = (subliminal ? parole[subliminal - 1][idx] : sillabe[idx]) || '';
+          sillaba.textContent = (subliminal ? parole[subliminal - 1][idx] : sillabe[idx]) || '';
           step = true;
           rafThen = rafNow;
         } else if (elapsed > duty) {
           document.body.style.background = blink ? (inverted ? 'white' : 'black') : '';
-          sillaba.innerHTML = '';
+          sillaba.textContent = '';
         }
 
         if (step) {
@@ -132,8 +132,8 @@
       const dutyText = document.getElementById('duty');
       const cycleText = document.getElementById('cycle');
       const updateInfo = () => {
-        dutyText.innerHTML = Math.min(parseFloat((100*duty/cycle).toFixed(1)), 100) + ' % (' + duty + 'ms)';
-        cycleText.innerHTML = parseFloat((60*1000/cycle).toFixed(1)) + ' BPM [' + parseFloat((1000/cycle).toFixed(1)) + ' BPS]';
+        dutyText.textContent = Math.min(parseFloat((100*duty/cycle).toFixed(1)), 100) + ' % (' + duty + 'ms)';
+        cycleText.textContent = parseFloat((60*1000/cycle).toFixed(1)) + ' BPM [' + parseFloat((1000/cycle).toFixed(1)) + ' BPS]';
       };
       updateInfo();
 
